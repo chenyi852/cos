@@ -1,13 +1,21 @@
 CC=gcc
+Q=@
+ECHO=echo
+RM=rm
 srctree := .
+
+
 MM_DIR=mm
 THREAD_DIR=thread
+
 KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(MM_DIR)/*.c) \
-	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c) 	
+	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c)
 
 CFLAGS=-I.  -g
 CFLAGS += $(COMM_INCLUDE)
+
+TARGET=cos.elf
 
 # Debug option
 ifdef DEBUG
@@ -27,12 +35,20 @@ objs := $(patsubst %.c, %.o, $(KERNEL_SRC))
 
 %.o: %.c $(DEPS)
 	$(CC) -c $(CFLAGS) -o $@ $<
+	$(Q)$(ECHO) "Compiling $< ==> $@"
 
-default: cos.elf
-cos.elf:   $(objs)
-	echo $(KERNEL_SRC)
+$(TARGET):   $(objs)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+	$(Q)$(ECHO) "Compile done."
+
 .PHONY: clean
 
 clean:
-	rm -f ./*.o ./cos.elf $(objs)
+	$(Q)$(RM) -f  $(objs)
+	$(Q)$(ECHO) "Clean object files done."
+
+	$(Q)$(RM) $(TARGET)
+	$(Q)$(ECHO) "Clean target files done."
+
+	#$(Q)$(RM) *~ 2> /dev/null
+	#$(Q)$(ECHO) "Clean temporary files done."
