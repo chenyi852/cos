@@ -21,7 +21,7 @@ void caculate_TCR_TxSZ(u32 width)
 
 	low_end_addr = (1UL << (64 - low_width)) - 1;
 	printf("lower VA subrange : 0x%016lx - 0x%016lx\n", 0UL, low_end_addr );
-	up_start_addr = ((1UL << 64) - (1UL << (64 - up_width)));
+	up_start_addr = ((~0ULL) - ((1UL << 64 - up_width) - 1));
 	printf("upper VA subrange : 0x%016lx - 0x%016lx\n", up_start_addr,
 		0xffffffffffffffff );
 
