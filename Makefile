@@ -1,7 +1,10 @@
 CC=gcc
 srctree := .
-KERNEL_DIR := mm
-KERNEL_SRC := $(wildcard *.c) $(wildcard  $(srctree)/$(KERNEL_DIR)/*.c)
+MM_DIR=mm
+THREAD_DIR=thread
+KERNEL_SRC := $(wildcard *.c) \
+	      $(wildcard $(srctree)/$(MM_DIR)/*.c) \
+	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c) 	
 
 CFLAGS=-I.  -g
 CFLAGS += $(COMM_INCLUDE)
@@ -14,7 +17,6 @@ endif
 
 LDFLAGS=-lpthread
 DEPS =
-OBJ = main.o bit.o hm_va.o mmu_el1.o
 
 ### include folders
 COMM_INCLUDE :=\

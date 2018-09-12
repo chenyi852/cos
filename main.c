@@ -1,8 +1,10 @@
 #include <stdio.h>
 
 #include "hm_va.h"
+#include "thread.h"
 
 extern int clz(unsigned int x);
+
 int main(int argc, char * argv[])
 {
 	unsigned int number = 0x4;
@@ -11,5 +13,8 @@ int main(int argc, char * argv[])
 	printf("%.*s--- ~0ULL = 0x%llx\n", 5, "----------------", (~0ULL));
 
 	va_entry();
+	
+	thread_entry();
+
 	return 0;
 }
