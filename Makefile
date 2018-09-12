@@ -50,5 +50,5 @@ clean:
 	$(Q)$(RM) $(TARGET)
 	$(Q)$(ECHO) "Clean target files done."
 
-	#$(Q)$(RM) *~ 2> /dev/null
-	#$(Q)$(ECHO) "Clean temporary files done."
+#$(Q)$(RM) *~ 2> /dev/null
+#$(Q)$(ECHO) "Clean temporary files done."
