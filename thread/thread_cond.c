@@ -12,7 +12,7 @@
 #include "thread.h"
 /*  --------------------------------
 	T_a		T-b
-	wait		++1
+	wait		++i
 	|		|
 	|		|
 	print i  <----	if i is a

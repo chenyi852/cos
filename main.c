@@ -15,6 +15,8 @@ int main(int argc, char * argv[])
 	va_entry();
 	
 	thread_entry();
-
+#ifdef ARM
+	printf("ARM flags is defined in the Makefile!\n");
+#endif
 	return 0;
 }

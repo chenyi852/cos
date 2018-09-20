@@ -25,7 +25,9 @@ endif
 
 LDFLAGS=-lpthread
 DEPS =
-
+DEFS += ARM
+DEFS := ${DEFS:%=-D%}
+CFLAGS += ${DEFS}
 ### include folders
 COMM_INCLUDE :=\
 	  -I$(srctree)/include
