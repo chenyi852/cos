@@ -38,6 +38,8 @@ COMM_INCLUDE :=\
 ARCH_INCLUDE :=\
 	-I$(srctree)/arch/$(ARCH)/include
 
+CFLAGS=-I.  -g -gdwarf-2
+CFLAGS += $(COMM_INCLUDE)
 
 CFLAGS=-I.  -g -gdwarf-2
 CFLAGS += $(COMM_INCLUDE)
@@ -53,48 +55,13 @@ ifeq ($(CONFIG_KERNEL), y)
 LDFLAGS += --script=$(LD_SCRIPT)
 endif
 
-ifeq ($(CONFIG_KERNEL), y)
 # dependened libs
 LDFLAGS=-lpthread
-endif
 
 ## D FLAGS
 DEPS =
-<<<<<<< HEAD
-
-## virtual address test
-#DEFS += VITR_ADDR
-ifeq ($(CONFIG_ARM), y)
-DEFS += ARM
-endif
-## enable test case
-#DEFS += TEST
-ifeq ($(CONFIG_PROCON), y)
-	DEFS += PROCON
-endif
-
-ifeq ($(CONFIG_COREDUMP), y)
-DEFS += CORE_DUMP
-endif
-
-ifeq ($(CONFIG_USER), y)
-DEFS += MTHREAD_TEST
-endif
-
-ifeq ($(ARCH), arm)
-DEFS += ELF_CLASS=ELFCLASS32
-else ifeq ($(ARCH), arm64)
-DEFS += ELF_CLASS=ELFCALSS64
-else ifeq ($(ARCH), x86_64)
-DEFS += ELF_CLASS=ELFCLASS64
-endif
-
-=======
 -include makefile.def
-DEFS += ARM
-DEFS += TEST
-DEFS += MTHREAD_TEST
->>>>>>> Makefile: -include makefile.def
+
 DEFS := ${DEFS:%=-D%}
 CFLAGS += ${DEFS}
 #
