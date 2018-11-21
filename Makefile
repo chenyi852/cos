@@ -10,15 +10,17 @@ LD_SCRIPT = link.ld.S
 MM_DIR=mm
 THREAD_DIR=thread
 LIB_DIR=lib
+DEBUG=debug
 
 CONFIG_KERNEL=y
-
+CONFIG_COREDUMP=y
 
 # Src files
 KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(MM_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c) \
-	      $(wildcard $(srctree)/$(LIB_DIR)/*.c)
+	      $(wildcard $(srctree)/$(LIB_DIR)/*.c) \
+	      $(wildcard $(srctree)/$(DEBUG)/*.c)
 
 ### include folders
 COMM_INCLUDE :=\
@@ -45,11 +47,27 @@ endif
 
 ## D FLAGS
 DEPS =
+
+## virtual address test
+#DEFS += VITR_ADDR
 DEFS += ARM
-DEFS += TEST
+## enable test case
+#DEFS += TEST
+
+ifeq ($(CONFIG_COREDUMP), y)
+DEFS += CORE_DUMP
+endif
 
 ifeq ($(CONFIG_USER), y)
 DEFS += MTHREAD_TEST
+endif
+
+ifeq ($(ARCH), arm)
+DEFS += ELF_CLASS=ELFCLASS32
+else ifeq ($(ARCH), aarch)
+DEFS += ELF_CLASS=ELFCALSS64
+else
+DEFS += ELF_CLASS=ELFCLASS32
 endif
 
 DEFS := ${DEFS:%=-D%}
@@ -78,7 +96,6 @@ virt virt64 vexpress: export BIN    = $(O_DIR)$@.bin
 virt virt64 vexpress: export SREC   = $(O_DIR)$@.srec
 virt virt64 vexpress: export UIMAGE = $(O_DIR)$@.uboot
 
-
 ## Target elf
 TARGET=cos.elf
 
@@ -95,11 +112,11 @@ $(TARGET):   $(objs)
 .PHONY: clean
 
 clean:
-	$(Q)$(RM) -f  $(objs)
+	$(Q)$(RM) -f  $(objs) 
 	$(Q)$(ECHO) "Clean object files done."
 
-	$(Q)$(RM) $(TARGET)
+	$(Q)$(RM) $(TARGET) 
 	$(Q)$(ECHO) "Clean target files done."
 
-#$(Q)$(RM) *~ 2> /dev/null
+#$(Q)$(RM) *~ 
 #$(Q)$(ECHO) "Clean temporary files done."

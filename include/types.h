@@ -13,4 +13,8 @@ typedef unsigned int u32;
 typedef long  s64;
 typedef unsigned long u64;
 
+
+struct list_head {
+	struct list_head *next, *prev;
+};
 #endif
