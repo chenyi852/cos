@@ -1,6 +1,7 @@
 #ifndef _COS_ARCH_ELF_H
 #define _COS_ARCH_ELF_H 
 
+#include "elf_pub.h"
 #include "user.h"
 
 typedef unsigned long elf_greg_t;

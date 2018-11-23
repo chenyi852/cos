@@ -4,6 +4,9 @@
 #include "types.h"
 #include "arch_elf.h"
 
+#ifndef ELF_CORE_EFLAGS
+#define ELF_CORE_EFLAGS	0
+#endif
 /* this files is copied from linux include/uapi/linux/elf.h */
 
 /* 32-bit ELF base types. */
@@ -223,6 +226,10 @@ typedef struct elf64_hdr {
   Elf64_Half e_shnum;
   Elf64_Half e_shstrndx;
 } Elf64_Ehdr;
+
+#ifndef ELF_CORE_EFLAGS
+#define ELF_CORE_EFLAGS	0
+#endif
 
 /* These constants define the permissions on sections in the program
    header, p_flags. */

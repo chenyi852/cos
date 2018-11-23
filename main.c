@@ -10,10 +10,9 @@ extern int clz(unsigned int x);
 int main(int argc, char * argv[])
 {
 	unsigned int number = 0x4;
-	struct core_dump_params cdprms;
 
 #ifdef CORE_DUMP
-	elf_core_dump(&cdprms);
+	create_elf_core();
 #endif
 
 #ifdef VIRT_ADDR

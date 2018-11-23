@@ -4,10 +4,9 @@
 #include "elf.h"
 
 struct core_dump_params {
+	FILE *fp;
 	int segments; /* number of load segments */
 };
 
-
-int elf_core_dump(struct core_dump_params *cdprm);
-
+int create_elf_core(void);
 #endif
