@@ -2,7 +2,7 @@
 #define _COS_ELF_H
 
 #include "types.h"
-#include "arm.h"
+#include "arch_elf.h"
 
 /* this files is copied from linux include/uapi/linux/elf.h */
 

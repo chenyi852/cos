@@ -27,7 +27,8 @@ int get_thread_info(void)
 	pid_t child;
 	//pid_t pid = getpid();
 	regs thread_regs;
-	long inst;  //用于保存指令寄存器所指向的下一条将要执行的指令的内存地址
+	/* save the instruction to be executred next */
+	long inst;
 	long orig_rax;
 	long rip;
 	child = fork();
@@ -41,11 +42,11 @@ int get_thread_info(void)
 		orig_rax = ptrace(PTRACE_PEEKUSER,child,8*ORIG_RAX,NULL);
 		printf("The child made a system call %ld\n",orig_rax);
 		rip = ptrace(PTRACE_PEEKUSER, child, 8 * RIP,NULL);
-		printf("The child made a system call %lx\n", rip);
+		printf("The RIP is  %lx\n", rip);
 
 		memset(scratch, 0xFF, sizeof(scratch));
-		inst  =ptrace(PTRACE_PEEKTEXT, child, thread_regs.rip,NULL);
-		printf("tracee:RIP:0x%lx INST: 0x%lx\n", thread_regs.rip,inst);
+		inst  =ptrace(PTRACE_PEEKTEXT, child, rip, NULL);
+		printf("tracee:RIP:0x%lx INST: 0x%lx\n", rip, inst);
 #if 0
 		if (ptrace(PTRACE_ATTACH, child, (void *)0,
 					(void *)0) < 0) {

@@ -14,21 +14,31 @@ DEBUG=debug
 
 CONFIG_KERNEL=y
 CONFIG_COREDUMP=y
+#CONFIG_ARM64=
+CONFIG_X86_64=y
+
+ifeq ($(CONFIG_X86_64), y)
+	ARCH = x86_64
+endif
 
 # Src files
 KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(MM_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(LIB_DIR)/*.c) \
-	      $(wildcard $(srctree)/$(DEBUG)/*.c)
+	      $(wildcard $(srctree)/$(DEBUG)/*.c) \
+	      $(wildcard $(srctree)/arch/$(ARCH)/*.c)
 
 ### include folders
 COMM_INCLUDE :=\
 	  -I$(srctree)/include
+ARCH_INCLUDE :=\
+	-I$(srctree)/arch/$(ARCH)/include
+
 
 CFLAGS=-I.  -g -gdwarf-2
 CFLAGS += $(COMM_INCLUDE)
-
+CFLAGS += $(ARCH_INCLUDE)
 
 # Debug option
 ifdef DEBUG
@@ -64,10 +74,10 @@ endif
 
 ifeq ($(ARCH), arm)
 DEFS += ELF_CLASS=ELFCLASS32
-else ifeq ($(ARCH), aarch)
+else ifeq ($(ARCH), arm64)
 DEFS += ELF_CLASS=ELFCALSS64
-else
-DEFS += ELF_CLASS=ELFCLASS32
+else ifeq ($(ARCH), x86_64)
+DEFS += ELF_CLASS=ELFCLASS64
 endif
 
 DEFS := ${DEFS:%=-D%}
@@ -112,11 +122,11 @@ $(TARGET):   $(objs)
 .PHONY: clean
 
 clean:
-	$(Q)$(RM) -f  $(objs) 
+	$(Q)$(RM) -f  $(objs)
 	$(Q)$(ECHO) "Clean object files done."
 
-	$(Q)$(RM) $(TARGET) 
+	$(Q)$(RM) $(TARGET)
 	$(Q)$(ECHO) "Clean target files done."
 
-#$(Q)$(RM) *~ 
+#$(Q)$(RM) *~
 #$(Q)$(ECHO) "Clean temporary files done."

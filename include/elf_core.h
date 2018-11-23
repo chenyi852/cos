@@ -21,8 +21,8 @@ struct timeval {
 };
 #endif
 /* ----- */
-typedef unsigned short __kernel_uid_t;
-typedef unsigned short __kernle_gid_t;
+//typedef unsigned short __kernel_uid_t;
+//typedef unsigned short __kernle_gid_t;
 
 
 /* --- signinfo.h ---- */
@@ -136,7 +136,7 @@ struct memelfnote
 	void *data;
 };
 
-typedef struct user_fp elf_fpregset_t;
+//typedef struct user_fp elf_fpregset_t;
 struct elf_note_info {
 	struct memelfnote *notes;
 	struct memelfnote *notes_files;
