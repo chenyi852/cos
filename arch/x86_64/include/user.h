@@ -68,6 +68,7 @@ struct user_i387_struct {
 	u32	padding[24];
 };
 
+#ifdef _COS_
 /*
  * Segment register layout in coredumps.
  */
@@ -135,6 +136,8 @@ struct user {
   unsigned long error_code; /* CPU error code or 0 */
   unsigned long fault_address; /* CR3 or 0 */
 };
+#endif
+
 #define NBPG PAGE_SIZE
 #define UPAGES 1
 #define HOST_TEXT_START_ADDR (u.start_code)

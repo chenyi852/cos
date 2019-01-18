@@ -1,5 +1,6 @@
-#include <sys/ptrace.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <sys/ptrace.h>
 #include <sys/wait.h>
 
 #include <unistd.h>
@@ -7,26 +8,11 @@
 #include <stdio.h>
 
 #include "arch_elf.h"
-#include "elf_core.h"
+#include "arch_thread.h"
 
-#if 0
-typedef struct i386_regs {    /* Normal (non-FPU) CPU registers            */
-    #define BP rbp
-    #define SP rsp
-    #define IP rip
-    u64  r15,r14,r13,r12,rbp,rbx,r11,r10;
-    u64  r9,r8,rax,rcx,rdx,rsi,rdi,orig_rax;
-    u64  rip,cs,eflags;
-    u64  rsp,ss;
-    u64  fs_base, gs_base;
-    u64  ds,es,fs,gs;
-}regs;
-#endif
 
-#include <sys/user.h>
-#include <sys/reg.h>
 
-#if 0
+
 int get_thread_info(struct user_regs_struct *regs)
 {
 	char scratch[4096];
@@ -48,11 +34,11 @@ int get_thread_info(struct user_regs_struct *regs)
 		orig_rax = ptrace(PTRACE_PEEKUSER,child,8*ORIG_RAX,NULL);
 		printf("The child made a system call %ld\n",orig_rax);
 		rip = ptrace(PTRACE_PEEKUSER, child, 8 * RIP,NULL);
-		printf("The RIP is  %lx\n", rip);
+		printf("The RIP is  %llx\n", rip);
 
 		memset(scratch, 0xFF, sizeof(scratch));
 		inst  =ptrace(PTRACE_PEEKTEXT, child, rip, NULL);
-		printf("tracee:RIP:0x%lx INST: 0x%lx\n", rip, inst);
+		printf("tracee:RIP:0x%llx INST: 0x%llx\n", rip, inst);
 #if 0
 		if (ptrace(PTRACE_ATTACH, child, (void *)0,
 					(void *)0) < 0) {
@@ -61,8 +47,8 @@ int get_thread_info(struct user_regs_struct *regs)
 #endif
 		if (ptrace(PTRACE_GETREGS, child, scratch, scratch) == 0) {
 			memcpy(thread_regs, scratch, sizeof(regs));
-			printf("rip = %lx\n", thread_regs->rip);
-			printf("rsp = %lx\n", thread_regs->rsp);
+			printf("rip = %llx\n", thread_regs->rip);
+			printf("rsp = %llx\n", thread_regs->rsp);
 			printf("orig_rax = %lu\n", thread_regs->orig_rax);
 		}
 		ptrace(PTRACE_CONT,child,NULL,NULL);
@@ -70,4 +56,3 @@ int get_thread_info(struct user_regs_struct *regs)
 	}
 
 }
-#endif

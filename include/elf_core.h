@@ -82,6 +82,8 @@ struct elf_siginfo
 	int	si_errno;			/* errno */
 };
 
+#include <sys/user.h>
+typedef struct user_fpregs_struct elf_fpregset_t;
 /*
  * Definitions to generate Intel SVR4-like core files.
  * These mostly have the same names as the SVR4 types with "elf_"
@@ -136,7 +138,6 @@ struct memelfnote
 	void *data;
 };
 
-//typedef struct user_fp elf_fpregset_t;
 struct elf_note_info {
 	struct memelfnote *notes;
 	struct memelfnote *notes_files;
@@ -152,5 +153,5 @@ struct elf_note_info {
 	int numnote;
 };
 
-int get_thread_info(void);
+int get_thread_info(struct user_regs_struct *regs);
 #endif

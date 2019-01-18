@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "algorithm.h"
 #include "coredump.h"
 #include "hm_va.h"
 #include "thread.h"
@@ -10,6 +11,8 @@ extern int clz(unsigned int x);
 int main(int argc, char * argv[])
 {
 	unsigned int number = 0x4;
+
+	algorithm_main();
 
 #ifdef CORE_DUMP
 	create_elf_core();

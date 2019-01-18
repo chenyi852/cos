@@ -11,11 +11,21 @@ MM_DIR=mm
 THREAD_DIR=thread
 LIB_DIR=lib
 DEBUG=debug
+ALGORITHM_DIR=algorithm
 
-CONFIG_KERNEL=y
-CONFIG_COREDUMP=y
+ifeq ($(ARCH), )
+	ARCH = x86_64
+endif
+
+-include $(srctree)/arch/$(ARCH)/.config
+
+#CONFIG_KERNEL=y
+#CONFIG_COREDUMP=y
 #CONFIG_ARM64=
-CONFIG_X86_64=y
+#CONFIG_ARM=
+#CONFIG_X86_64=y
+
+
 
 ifeq ($(CONFIG_X86_64), y)
 	ARCH = x86_64
@@ -27,7 +37,8 @@ KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(THREAD_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(LIB_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(DEBUG)/*.c) \
-	      $(wildcard $(srctree)/arch/$(ARCH)/*.c)
+	      $(wildcard $(srctree)/arch/$(ARCH)/*.c) \
+	      $(wildcard $(srctree)/$(ALGORITHM_DIR)/*.c)
 
 ### include folders
 COMM_INCLUDE :=\
@@ -60,9 +71,14 @@ DEPS =
 
 ## virtual address test
 #DEFS += VITR_ADDR
+ifeq ($(CONFIG_ARM), y)
 DEFS += ARM
+endif
 ## enable test case
 #DEFS += TEST
+ifeq ($(CONFIG_PROCON), y)
+	DEFS += PROCON
+endif
 
 ifeq ($(CONFIG_COREDUMP), y)
 DEFS += CORE_DUMP
@@ -122,7 +138,7 @@ $(TARGET):   $(objs)
 .PHONY: clean
 
 clean:
-	$(Q)$(RM) -f  $(objs)
+	$(Q)$(RM)  $(objs)
 	$(Q)$(ECHO) "Clean object files done."
 
 	$(Q)$(RM) $(TARGET)
