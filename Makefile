@@ -19,14 +19,6 @@ endif
 
 -include $(srctree)/arch/$(ARCH)/.config
 
-#CONFIG_KERNEL=y
-#CONFIG_COREDUMP=y
-#CONFIG_ARM64=
-#CONFIG_ARM=
-#CONFIG_X86_64=y
-
-
-
 ifeq ($(CONFIG_X86_64), y)
 	ARCH = x86_64
 endif
@@ -68,6 +60,7 @@ endif
 
 ## D FLAGS
 DEPS =
+<<<<<<< HEAD
 
 ## virtual address test
 #DEFS += VITR_ADDR
@@ -96,6 +89,12 @@ else ifeq ($(ARCH), x86_64)
 DEFS += ELF_CLASS=ELFCLASS64
 endif
 
+=======
+-include makefile.def
+DEFS += ARM
+DEFS += TEST
+DEFS += MTHREAD_TEST
+>>>>>>> Makefile: -include makefile.def
 DEFS := ${DEFS:%=-D%}
 CFLAGS += ${DEFS}
 #
