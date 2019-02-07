@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "virt.h"
 #include "algorithm.h"
 #include "coredump.h"
 #include "hm_va.h"
@@ -12,6 +13,7 @@ int main(int argc, char * argv[])
 {
 	unsigned int number = 0x4;
 
+	virt_main();
 	algorithm_main();
 
 #ifdef CORE_DUMP

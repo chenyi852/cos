@@ -6,22 +6,32 @@ ECHO=echo
 RM=rm
 srctree := .
 LD_SCRIPT = link.ld.S
+
+## command
+GEN_DEF=$(srctree)/scripts/config2def.sh
+
 ## Directory list
 MM_DIR=mm
 THREAD_DIR=thread
 LIB_DIR=lib
 DEBUG=debug
 ALGORITHM_DIR=algorithm
+VIRT_DIR=virt
+
+
+-include $(KERNEL_CONFIG)
+
+
+
+ifeq ($(CONFIG_X86_64), y)
+	ARCH = x86_64
+endif
 
 ifeq ($(ARCH), )
 	ARCH = x86_64
 endif
 
--include $(srctree)/arch/$(ARCH)/.config
-
-ifeq ($(CONFIG_X86_64), y)
-	ARCH = x86_64
-endif
+KERNEL_CONFIG=$(srctree)/arch/$(ARCH)/.config
 
 # Src files
 KERNEL_SRC := $(wildcard *.c) \
@@ -30,7 +40,8 @@ KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(LIB_DIR)/*.c) \
 	      $(wildcard $(srctree)/$(DEBUG)/*.c) \
 	      $(wildcard $(srctree)/arch/$(ARCH)/*.c) \
-	      $(wildcard $(srctree)/$(ALGORITHM_DIR)/*.c)
+	      $(wildcard $(srctree)/$(ALGORITHM_DIR)/*.c) \
+	      $(wildcard $(srctree)/$(VIRT_DIR)/*.c)
 
 ### include folders
 COMM_INCLUDE :=\
@@ -60,7 +71,7 @@ LDFLAGS=-lpthread
 
 ## D FLAGS
 DEPS =
--include makefile.def
+include makefile.def
 
 DEFS := ${DEFS:%=-D%}
 CFLAGS += ${DEFS}
@@ -91,17 +102,20 @@ virt virt64 vexpress: export UIMAGE = $(O_DIR)$@.uboot
 ## Target elf
 TARGET=cos.elf
 
+
+
 objs := $(patsubst %.c, %.o, $(KERNEL_SRC))
 
 %.o: %.c $(DEPS)
 	$(CC) -c $(CFLAGS) -o $@ $<
 	$(Q)$(ECHO) "Compiling $< ==> $@"
 
-$(TARGET):   $(objs)
+$(TARGET):  $(objs)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 	$(Q)$(ECHO) "Compile done."
 
-.PHONY: clean
+do_script:
+	$(GEN_DEF) $(KERNEL_CONFIG)
 
 clean:
 	$(Q)$(RM)  $(objs)
@@ -110,5 +124,6 @@ clean:
 	$(Q)$(RM) $(TARGET)
 	$(Q)$(ECHO) "Clean target files done."
 
+.PHONY: $(TARGET) do_script
 #$(Q)$(RM) *~
 #$(Q)$(ECHO) "Clean temporary files done."
