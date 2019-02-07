@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include "debug.h"
 #include "types.h"
 #include "mmu_el1.h"
 

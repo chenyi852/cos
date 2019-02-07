@@ -17,7 +17,8 @@ LIB_DIR=lib
 DEBUG=debug
 ALGORITHM_DIR=algorithm
 VIRT_DIR=virt
-
+FS_DIR=fs
+LOG_DIR=log
 
 -include $(KERNEL_CONFIG)
 
@@ -41,7 +42,9 @@ KERNEL_SRC := $(wildcard *.c) \
 	      $(wildcard $(srctree)/$(DEBUG)/*.c) \
 	      $(wildcard $(srctree)/arch/$(ARCH)/*.c) \
 	      $(wildcard $(srctree)/$(ALGORITHM_DIR)/*.c) \
-	      $(wildcard $(srctree)/$(VIRT_DIR)/*.c)
+	      $(wildcard $(srctree)/$(VIRT_DIR)/*.c) \
+	      $(wildcard $(srctree)/$(FS_DIR)/*.c) \
+	      $(wildcard $(srctree)/$(LOG_DIR)/*.c)
 
 ### include folders
 COMM_INCLUDE :=\

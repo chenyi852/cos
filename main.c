@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "fs.h"
 #include "virt.h"
 #include "algorithm.h"
 #include "coredump.h"
@@ -15,7 +16,7 @@ int main(int argc, char * argv[])
 
 	virt_main();
 	algorithm_main();
-
+	fs_main();
 #ifdef CORE_DUMP
 	create_elf_core();
 #endif

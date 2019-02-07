@@ -1,7 +1,7 @@
 #ifndef _MMU_EL1_H
 #define _MMU_EL1_H
 
-#include "debug.h"
+#include "log.h"
 #include "types.h"
 
 /* Virtual address layout
