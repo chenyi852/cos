@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "debug.h"
+#include "log.h"
 #include "thread.h"
 /*  --------------------------------
 	T_a		T-b
