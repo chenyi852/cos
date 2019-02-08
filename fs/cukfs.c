@@ -38,7 +38,7 @@ static size_t cukfs_read(size_t offset, void *buf, size_t size)
 	return size;
 }
 
-static int cukfs_test(void)
+int cukfs_test(void)
 {
 	int tst_offset = 0x10;
 	char *wrbuf="chenyi is good\n";
@@ -52,7 +52,7 @@ static int cukfs_test(void)
 
 }
 
-int mangofs_main(int argc, char **argv)
+int cukfs_main(int argc, char **argv)
 {
 	cukfs_test();
 
