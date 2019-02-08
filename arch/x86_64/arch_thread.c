@@ -34,11 +34,11 @@ int get_thread_info(struct user_regs_struct *regs)
 		orig_rax = ptrace(PTRACE_PEEKUSER,child,8*ORIG_RAX,NULL);
 		printf("The child made a system call %ld\n",orig_rax);
 		rip = ptrace(PTRACE_PEEKUSER, child, 8 * RIP,NULL);
-		printf("The RIP is  %llx\n", rip);
+		printf("The RIP is  %lx\n", rip);
 
 		memset(scratch, 0xFF, sizeof(scratch));
 		inst  =ptrace(PTRACE_PEEKTEXT, child, rip, NULL);
-		printf("tracee:RIP:0x%llx INST: 0x%llx\n", rip, inst);
+		printf("tracee:RIP:0x%lx INST: 0x%lx\n", rip, inst);
 #if 0
 		if (ptrace(PTRACE_ATTACH, child, (void *)0,
 					(void *)0) < 0) {
@@ -49,7 +49,7 @@ int get_thread_info(struct user_regs_struct *regs)
 			memcpy(thread_regs, scratch, sizeof(regs));
 			printf("rip = %llx\n", thread_regs->rip);
 			printf("rsp = %llx\n", thread_regs->rsp);
-			printf("orig_rax = %lu\n", thread_regs->orig_rax);
+			printf("orig_rax = %llx\n", thread_regs->orig_rax);
 		}
 		ptrace(PTRACE_CONT,child,NULL,NULL);
 
