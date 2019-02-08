@@ -9,6 +9,13 @@
 #define fs_info(fmt, ...) \
 	mg_info(fmt, ##__VA_ARGS__)
 
+typedef uint32_t foff_t;
+
+typedef struct file_descriptor{
+	uint32_t inum;
+
+}fd_t;
+
 
 #ifdef CONFIG_FS
 int fs_main(void);

@@ -1,6 +1,7 @@
 #ifndef _CTYPE_H
 #define _CTYPE_H
 
+#include <stdint.h>
 #include "arch_types.h"
 #include <stdio.h>
 
