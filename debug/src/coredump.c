@@ -80,20 +80,21 @@ static int fill_elf_note_phdr(int sz, loff_t offset, FILE *fp)
 	return 0;
 }
 
-
+#if 0
 static int writenote(struct memelfnote *men, FILE *fp,
 			loff_t *foffset)
 {
 
 	return 0;
 }
+#endif
 
-
+#if 0
 static int write_note_info(struct elf_note_info *info,
 			   FILE *fp, loff_t *foffset)
 {
 	int i;
-	struct list_head *t;
+	/* struct list_head *t; */
 	for (i = 0; i < info->numnote; i++)
 		if (!writenote(info->notes + i, fp, foffset))
 			return 1;
@@ -111,7 +112,9 @@ static int write_note_info(struct elf_note_info *info,
 #endif
 	return 0;
 }
+#endif
 
+#if 0
 static void fill_note(struct memelfnote *note, const char *name, int type,
 		unsigned int sz, void *data)
 {
@@ -119,8 +122,10 @@ static void fill_note(struct memelfnote *note, const char *name, int type,
 	note->type = type;
 	note->datasz = sz;
 	note->data = data;
+
 	return;
 }
+#endif
 
 /*
  * @ fill the program header of load segment
@@ -200,7 +205,7 @@ static void fill_prstatus(struct elf_prstatus *prstatus,
 static size_t fill_note_info(loff_t foffset, struct core_dump_params *cdpm)
 {
 	struct elf_note_info info = { };
-	FILE *fp	= cdpm->fp;
+	/* FILE *fp	= cdpm->fp; */
 	pt_regs *regs	= cdpm->regs;
 	size_t wt_sz =0;
 
@@ -252,8 +257,8 @@ static void fill_core_info(struct core_dump_params *cdpm)
  */
 int elf_core_dump(struct core_dump_params *cdpm)
 {
-	int segs;
-	struct elf_note_info info;
+	/* int segs; */ 
+	/* struct elf_note_info info; */
 	struct user_regs_struct regs;
 	/* 1 loc memory for elf header */
 
@@ -262,7 +267,7 @@ int elf_core_dump(struct core_dump_params *cdpm)
          *   load segments store the vma information
 	 */
 	cdpm->segments = 1 + 2;
-	segs = cdpm-> segments;
+	/* segs = cdpm-> segments; */
 
 	get_thread_info(&regs);
 	cdpm->regs	= &regs;

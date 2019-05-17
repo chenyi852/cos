@@ -33,6 +33,8 @@ static int cukfs_mkfs(uint32_t size)
 	cukfs->super.block_size = CUKFS_BLOCK_SIZE;
 	cukfs->super.nblocks = size / CUKFS_BLOCK_SIZE;
 	cukfs->inode.blocks[0] = 0;
+	
+	return 0;
 }
 
 static  int cukfs_init(size_t size)
@@ -116,6 +118,8 @@ int cukfs_test(void)
 	cukfs_close(fd);
 
 	free(rdbuf);
+
+	return 0;
 }
 
 int cukfs_main(int argc, char **argv)

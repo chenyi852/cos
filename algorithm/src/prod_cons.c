@@ -70,6 +70,7 @@ void *producer(void *arg) {
 			printf("producer has procudes %d buffer!\n", count);
 	} while (count++ < 1000); 
 
+	return NULL;
 }
 
 void *consumer(void *arg) {
@@ -88,6 +89,8 @@ void *consumer(void *arg) {
 			printf("consumer has procudes %d buffer!\n", count);
 
 	}while (count++ < 1000);
+
+	return NULL;
 }
 
 /* --------------------------------------------------------------------------

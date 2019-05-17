@@ -13,4 +13,6 @@
 int thread_entry(void)
 {
 	test_pthread_cond();
+
+	return 0;
 }

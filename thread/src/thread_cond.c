@@ -44,6 +44,8 @@ void *threada(void *junk)
 	}
 	
 	PRN_EXIT("exit");
+
+	return NULL;
 }
 
 void *threadb(void *junk)
@@ -62,6 +64,8 @@ void *threadb(void *junk)
 	}
 
 	PRN_EXIT("exit");
+
+	return NULL;
 }
 
 int test_pthread_cond(void)

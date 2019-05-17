@@ -50,6 +50,7 @@ static int cukfs_test(void)
 	cukfs_read(tst_offset, rdbuf, strlen(wrbuf) + 1);
 	fs_info("%s", rdbuf);
 
+	return 0;
 }
 
 int mangofs_main(int argc, char **argv)

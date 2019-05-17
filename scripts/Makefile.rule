@@ -1,0 +1,34 @@
+### copyright(2019) chenyi852@gmail.com
+
+ifeq ($(CONFIG_DEBUG), y)
+	CFLAGS += -g -O0
+else
+	CFLAGS += -O2
+endif
+
+INCLUDEFLAGS := -I$(SRC_TREE)/include/ \
+	$(SRC_TREE)/arch/$(ARCH)/include
+
+CFLAGS += -Wall -Werror -fno-stack-protector $(INCLUDEFLAGS) $(LIBS_PATH)
+%.o: %.c $(DEPS)
+	$(CC) -c $(CFLAGS) -o $@ $<
+	$(Q)$(ECHO) "Compiling $< ==> $@"
+
+all : $(SRC_BIN) $(SRC_LIBS)
+ifneq ($(SRC_BIN),)
+$(SRC_BIN): $(SRC_OBJS)
+	      $(CC) -o $@ $^ $(LDFLAGS)
+endif
+
+ifneq ($(SRC_LIBS),)
+$(SRC_LIBS): $(SRC_OBJS)
+	       $(AR) rcs $@ $^
+endif
+
+clean:
+	$(RM) $(SRC_OBJS) $(SRC_LIBS) $(SRC_BIN)
+distclean:
+	$(RM) $(SRC_OBJS) $(SRC_LIBS) $(SRC_BIN)
+
+.PHONY: all clean distclean
+
